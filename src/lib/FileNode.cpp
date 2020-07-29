@@ -151,6 +151,7 @@ std::string FileNode::to_string()
   case fnd_ref_filenodelist:
     stream << "fnd_ref_filenodelist@0x" << m_fnd.get_location();
     break;
+  case fnd_invalid_basetype:
   default:
     stream << "UNKNOWN BASETYPE";
     assert(false);
@@ -195,6 +196,7 @@ void FileNode::parse_header(librevenge::RVNGInputStream *input)
   case fnd_no_data:
     reference.set_zero();
     break;
+  case fnd_invalid_basetype:
   default:
     assert(false);
     break;
