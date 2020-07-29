@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+
 #include <cstring>
 #include <iostream>
 #include <iomanip>
@@ -18,6 +19,10 @@
 #include <bitset>
 
 #include "FileNode.h"
+
+#ifdef DEBUG
+#include <cassert>
+#endif
 
 namespace libone
 {
@@ -126,7 +131,9 @@ void FileNode::parse(librevenge::RVNGInputStream *input)
   case fnd_id::fnd_invalid_id:
   default:
     DBMSG << "dunno but value is " << m_fnd_id << std::endl;
+#if DEBUG
     assert(false);
+#endif
     break;
   }
 }
@@ -154,7 +161,9 @@ std::string FileNode::to_string()
   case fnd_invalid_basetype:
   default:
     stream << "UNKNOWN BASETYPE";
+#if DEBUG
     assert(false);
+#endif
     break;
   }
 
@@ -181,7 +190,9 @@ void FileNode::parse_header(librevenge::RVNGInputStream *input)
     ONE_DEBUG_MSG(("%s\n", z.to_string().c_str()));
     ONE_DEBUG_MSG(("warning: d is zero\n"));
   }
+#ifdef DEBUG
   assert(d == 1);
+#endif
   FileNodeChunkReference reference(format_stp, format_cb, input->tell());
 
   std::bitset<32> y(temp);
@@ -198,7 +209,9 @@ void FileNode::parse_header(librevenge::RVNGInputStream *input)
     break;
   case fnd_invalid_basetype:
   default:
+#ifdef DEBUG
     assert(false);
+#endif
     break;
   }
   m_fnd = reference;

@@ -14,6 +14,10 @@
 #include "FileDataStore.h"
 #include "TransactionLog.h"
 
+#ifdef DEBUG
+#include <cassert>
+#endif
+
 namespace libone
 {
 
@@ -89,7 +93,9 @@ void OneNoteParser::parse_root_file_node_list(librevenge::RVNGInputStream *input
     case FileDataStoreListReferenceFND:
       break;
     default:
+#ifdef DEBUG
       assert(false);
+#endif
       break;
     }
   }
