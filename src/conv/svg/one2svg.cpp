@@ -9,8 +9,8 @@
 
 #include <iostream>
 #include <sstream>
-#include <stdio.h>
-#include <string.h>
+#include <cstring>
+
 
 #include <librevenge/librevenge.h>
 #include <librevenge-generators/librevenge-generators.h>
