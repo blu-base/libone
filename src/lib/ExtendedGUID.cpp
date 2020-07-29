@@ -32,7 +32,7 @@ void ExtendedGUID::parse(librevenge::RVNGInputStream *input)
 std::string ExtendedGUID::to_string()
 {
   std::stringstream stream;
-  stream << guid.to_string() << " n=" << n;
+  stream << "{" << guid.to_string() << "," << n << "}";
 
   return stream.str();
 }
