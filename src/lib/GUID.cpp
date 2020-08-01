@@ -65,7 +65,7 @@ std::string GUID::to_string()
   return stream.str();
 }
 
-bool GUID::is_equal(GUID other)
+bool GUID::is_equal(const GUID other) const
 {
   if ((Data1 == other.Data1) &&
       (Data2 == other.Data2) &&
@@ -82,7 +82,7 @@ bool GUID::is_equal(GUID other)
 }
 
 // This is used for FileDataStores. The GUID is given as a string in the file
-void GUID::from_string(std::string str)
+void GUID::from_string(std::string const str)
 {
   ONE_DEBUG_MSG(("\n"));
 
@@ -100,7 +100,7 @@ void GUID::from_string(std::string str)
 }
 
 
-librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, const GUID &obj)
+librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, GUID &obj)
 {
   obj.parse(&is);
   return is;
@@ -112,5 +112,7 @@ bool operator==(const GUID &lhs, const GUID &rhs) noexcept
 }
 bool operator!=(const GUID &lhs, const GUID &rhs) noexcept
 {
-  return !(lhs == rhs)
+  return !(lhs == rhs);
 }
+
+} // namespace libone

@@ -27,13 +27,13 @@ public:
 
   void parse(librevenge::RVNGInputStream *input);
   std::string to_string();
-  bool is_equal(GUID other);
+  bool is_equal(const GUID other) const;
   uint32_t Data1 = 0;
   uint16_t Data2 = 0;
   uint16_t Data3 = 0;
   uint16_t Data4[4] = { 0 };
   void zero();
-  void from_string(std::string str);
+  void from_string(const std::string str);
 
   friend librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, const GUID &obj);
 
