@@ -20,6 +20,11 @@ namespace libone
 class GUID
 {
 public:
+  GUID();
+  GUID(const uint32_t data1, const uint16_t data2, const uint16_t data3,
+       const uint16_t data4_1, const uint16_t data4_2,
+       const uint16_t data4_3, const uint16_t data4_4);
+
   void parse(librevenge::RVNGInputStream *input);
   std::string to_string();
   bool is_equal(GUID other);
@@ -29,6 +34,11 @@ public:
   uint16_t Data4[4] = { 0 };
   void zero();
   void from_string(std::string str);
+
+  friend librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, const GUID &obj);
+
+  friend bool operator==(const GUID &lhs, const GUID &rhs) noexcept;
+  friend bool operator!=(const GUID &lhs, const GUID &rhs) noexcept;
 };
 
 }

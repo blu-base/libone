@@ -232,6 +232,23 @@ unsigned long getLength(const boost::shared_ptr<librevenge::RVNGInputStream> inp
   return getLength(input.get());
 }
 
+template<typename T>
+std::string int_to_hex(T i)
+{
+  std::stringstream stream;
+  stream << std::setfill('0') << std::setw(sizeof(T)*2) << std::hex << i;
+  return stream.str();
+}
+//explicit instances of int_to_hex
+template std::string int_to_hex<uint8_t>(uint8_t);
+template std::string int_to_hex<uint16_t>(uint16_t);
+template std::string int_to_hex<uint32_t>(uint32_t);
+template std::string int_to_hex<uint64_t>(uint64_t);
+template std::string int_to_hex<int8_t>(int8_t);
+template std::string int_to_hex<int16_t>(int16_t);
+template std::string int_to_hex<int32_t>(int32_t);
+template std::string int_to_hex<int64_t>(int64_t);
+
 EndOfStreamException::EndOfStreamException()
 {
   ONE_DEBUG_MSG(("Throwing EndOfStreamException\n"));

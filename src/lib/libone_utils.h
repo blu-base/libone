@@ -18,6 +18,8 @@
 #include <string>
 #include <unordered_map>
 #include <boost/shared_ptr.hpp>
+#include <iomanip>
+#include <sstream>
 
 #include <librevenge-stream/librevenge-stream.h>
 #include <librevenge/librevenge.h>
@@ -107,6 +109,10 @@ void seek(boost::shared_ptr<librevenge::RVNGInputStream> input, unsigned long po
 void seekRelative(boost::shared_ptr<librevenge::RVNGInputStream> input, long pos);
 
 unsigned long getLength(boost::shared_ptr<librevenge::RVNGInputStream> input);
+
+
+template<typename T>
+std::string int_to_hex(T i);
 
 class EndOfStreamException
 {

@@ -16,13 +16,20 @@ libone_test = static_library(
 )
 
 test_dep = declare_dependency(
-  dependencies : [ dependency('threads'), dependency('cppunit')],
+  dependencies : [
+	  dependency('threads'),
+	  dependency('cppunit'),
+	  libone_source_dependencies
+	  ],
+
   # include_directories : test_incdir,
   link_with : libone_test
 )
 
 libone_test_files = [
   'test.cpp',
+  'common-types/GUIDTest.h',
+  'common-types/GUIDTest.cpp',
 ]
 
 if not meson.is_subproject()

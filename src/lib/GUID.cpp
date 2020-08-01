@@ -23,6 +23,18 @@
 namespace libone
 {
 
+GUID::GUID() :
+  Data1(0), Data2(0), Data3(0), Data4{0,0,0,0}
+{
+}
+
+GUID::GUID(const uint32_t data1, const uint16_t data2, const uint16_t data3,
+           const uint16_t data4_1, const uint16_t data4_2,
+           const uint16_t data4_3, const uint16_t data4_4) :
+  Data1(data1), Data2(data2), Data3(data3), Data4{data4_1, data4_2, data4_3, data4_4}
+{
+}
+
 void GUID::zero()
 {
   Data1 = 0;
@@ -44,10 +56,10 @@ void GUID::parse(librevenge::RVNGInputStream *input)
 std::string GUID::to_string()
 {
   std::stringstream stream;
-  stream << "{" << std::hex << Data1 << "-" << Data2 << "-" << Data3 << "-" << Data4[0] << "-";
+  stream << "{" << int_to_hex(Data1) << "-" << int_to_hex(Data2) << "-" << int_to_hex(Data3) << "-" << int_to_hex(Data4[0]) << "-";
 
   for (int i=1; i<4; i++)
-    stream << std::hex << Data4[i];
+    stream << int_to_hex(Data4[i]);
 
   stream << "}";
   return stream.str();
@@ -86,4 +98,19 @@ void GUID::from_string(std::string str)
 
   (void) str;
 }
+
+
+librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, const GUID &obj)
+{
+  obj.parse(&is);
+  return is;
+}
+
+bool operator==(const GUID &lhs, const GUID &rhs) noexcept
+{
+  return lhs.is_equal(rhs);
+}
+bool operator!=(const GUID &lhs, const GUID &rhs) noexcept
+{
+  return !(lhs == rhs)
 }
