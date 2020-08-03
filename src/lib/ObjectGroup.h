@@ -27,7 +27,7 @@ class ObjectGroup
 {
 public:
   std::unordered_map<std::string, libone::Object> list_parse(librevenge::RVNGInputStream *input, FileNodeChunkReference ref);
-  std::string get_guid();
+  std::string get_eguid();
 
 private:
   ExtendedGUID oid = ExtendedGUID();

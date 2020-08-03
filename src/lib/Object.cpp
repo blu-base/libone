@@ -19,7 +19,7 @@ namespace libone
 
 Object::Object(librevenge::RVNGInputStream *input, struct object_header _header)
 {
-  guid = _header.guid;
+  eguid = _header.eguid;
   jcid = _header.jcid;
   ref_count = _header.ref_count;
   fHasOidReferences = _header.fHasOidReferences;
@@ -41,14 +41,14 @@ void Object::set_read_only(bool new_)
 
 ExtendedGUID Object::get_guid()
 {
-  return guid;
+  return eguid;
 }
 
 std::string Object::to_string()
 {
   std::stringstream stream;
   stream << std::hex;
-  stream << "Object " << guid.to_string() << " ref_count " << ref_count << " jcid " << jcid.to_string() << "\n";
+  stream << "Object " << eguid.to_string() << " ref_count " << ref_count << " jcid " << jcid.to_string() << "\n";
   if (object_refs.size())
   {
     stream << "referencing " << object_refs.size() << " objects:\n";
@@ -89,14 +89,14 @@ void Object::to_document(librevenge::RVNGDrawingInterface *document, std::unorde
   {
 
   default:
-    ONE_DEBUG_MSG(("unknown JCID %s for object %s\n", jcid.to_string().c_str(), guid.to_string().c_str()));
+    ONE_DEBUG_MSG(("unknown JCID %s for object %s\n", jcid.to_string().c_str(), eguid.to_string().c_str()));
     break;
   }
 }
 
 void Object::parse_list(librevenge::RVNGInputStream *input, FileNodeChunkReference ref)
 {
-  ObjectSpaceStreamOfOIDs oids = ObjectSpaceStreamOfOIDs(guid);
+  ObjectSpaceStreamOfOIDs oids = ObjectSpaceStreamOfOIDs(eguid);
   ObjectSpaceStreamOfOSIDs osids = ObjectSpaceStreamOfOSIDs();
   ObjectSpaceStreamOfContextIDs contexts = ObjectSpaceStreamOfContextIDs();
   FileNodeList list(ref.get_location(), ref.get_size());
@@ -119,7 +119,7 @@ void Object::parse_list(librevenge::RVNGInputStream *input, FileNodeChunkReferen
 
   for (auto &i: object_refs)
   {
-    if (i.is_equal(guid))
+    if (i == eguid)
     {
       ONE_DEBUG_MSG(("found duplicate, would remove nah?\n"));
     }

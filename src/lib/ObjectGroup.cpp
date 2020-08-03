@@ -17,9 +17,8 @@ std::unordered_map<std::string, libone::Object> ObjectGroup::list_parse(libreven
 {
   FileNodeList list(ref.get_location(), ref.get_size());
   std::unordered_map<std::string, libone::Object> object_map = std::unordered_map<std::string, libone::Object>();
-  GUID temp = GUID();
-  DBMSG << "GUID " << temp.to_string();
-  oid.parse(input);
+
+  input >> oid;
   list.parse(input);
   ONE_DEBUG_MSG(("end of object group"));
   return object_map;

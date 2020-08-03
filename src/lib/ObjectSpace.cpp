@@ -42,8 +42,7 @@ void ObjectSpace::list_parse(librevenge::RVNGInputStream *input, ExtendedGUID ex
   FileNode node;
   FileNode node2;
   FileNodeList list = FileNodeList(ref.get_location(), ref.get_size());
-  ExtendedGUID temp;
-  temp.zero();
+  ExtendedGUID temp {};
 
   (void) expected_guid;
 

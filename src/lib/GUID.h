@@ -25,17 +25,17 @@ public:
        const uint16_t data4_1, const uint16_t data4_2,
        const uint16_t data4_3, const uint16_t data4_4);
 
-  std::string to_string();
+  std::string to_string() const;
   void from_string(const std::string str);
 
-  friend librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, const GUID &obj);
+  friend librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream *input, GUID &obj);
 
   friend bool operator==(const GUID &lhs, const GUID &rhs) noexcept;
   friend bool operator!=(const GUID &lhs, const GUID &rhs) noexcept;
 
 private:
   void parse(librevenge::RVNGInputStream *input);
-  bool is_equal(const GUID other) const;
+  bool is_equal(const GUID &other) const;
 
   uint32_t Data1 = 0;
   uint16_t Data2 = 0;

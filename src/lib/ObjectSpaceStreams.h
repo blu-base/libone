@@ -44,11 +44,11 @@ class ObjectSpaceStreamOfOIDs: public ObjectSpaceStream
 public:
   ObjectSpaceStreamOfOIDs(ExtendedGUID new_guid)
   {
-    guid = new_guid;
+    eguid = new_guid;
   }
   std::vector<ExtendedGUID> parse(librevenge::RVNGInputStream *input);
 private:
-  ExtendedGUID guid = ExtendedGUID();
+  ExtendedGUID eguid = ExtendedGUID();
 };
 
 class ObjectSpaceStreamOfOSIDs: public ObjectSpaceStream

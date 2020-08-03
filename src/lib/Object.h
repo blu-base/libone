@@ -26,7 +26,7 @@ namespace libone
 
 struct object_header
 {
-  ExtendedGUID guid = ExtendedGUID();
+  ExtendedGUID eguid = ExtendedGUID();
   FileNodeChunkReference body = FileNodeChunkReference(stp_format::stp_invalid, cb_format::cb_invalid, 0);
   JCID jcid = JCID(0);
   uint32_t ref_count = 0;
@@ -53,7 +53,7 @@ private:
   PropertySet set = PropertySet();
 
   bool read_only = false;
-  ExtendedGUID guid = ExtendedGUID();
+  ExtendedGUID eguid = ExtendedGUID();
   JCID jcid = JCID(0);
   uint32_t ref_count = 0;
   uint16_t fHasOidReferences = 0;

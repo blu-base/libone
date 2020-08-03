@@ -23,7 +23,10 @@
 namespace libone
 {
 
+
+// {FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}
 enum { MaxStringGUIDLength = 38};
+// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 enum { MinStringGUIDLength = 32};
 
 GUID::GUID() :
@@ -47,10 +50,10 @@ void GUID::parse(librevenge::RVNGInputStream *input)
     Data4[i] = readU16(input, true);
 }
 
-std::string GUID::to_string()
+std::string GUID::to_string() const
 {
   std::stringstream stream;
-  stream << "{" <<  int_to_hex(Data1) << Data1 << "-" << int_to_hex(Data2) << "-" << int_to_hex(Data3) << "-" << int_to_hex(Data4[0]) << "-";
+  stream << "{" <<  int_to_hex(Data1) << "-" << int_to_hex(Data2) << "-" << int_to_hex(Data3) << "-" << int_to_hex(Data4[0]) << "-";
 
   for (int i=1; i<4; i++)
     stream << int_to_hex(Data4[i]);
@@ -60,7 +63,7 @@ std::string GUID::to_string()
   return stream.str();
 }
 
-bool GUID::is_equal(const GUID other) const
+bool GUID::is_equal(const GUID &other) const
 {
   if ((Data1 == other.Data1) &&
       (Data2 == other.Data2) &&
@@ -81,8 +84,12 @@ void GUID::from_string(std::string const str)
 {
   ONE_DEBUG_MSG(("\n"));
 
-  if (str.size() < MinStringGUIDLength -1
-      || (str.front() == '{' && str.size() > MaxStringGUIDLength - 1)
+  if (str.size() < MinStringGUIDLength -1)
+  {
+    (void) str;
+  }
+
+  if ((str.front() == '{' && str.size() > MaxStringGUIDLength - 1)
       || (str.front() != '{' && str.at(8) == '-' && str.size() > MaxStringGUIDLength - 3))
   {
     (void) str;
@@ -116,10 +123,10 @@ void GUID::from_string(std::string const str)
 }
 
 
-librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &is, GUID &obj)
+librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream *input, GUID &obj)
 {
-  obj.parse(&is);
-  return is;
+  obj.parse(input);
+  return input;
 }
 
 bool operator==(const GUID &lhs, const GUID &rhs) noexcept

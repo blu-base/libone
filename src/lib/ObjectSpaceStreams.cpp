@@ -60,7 +60,7 @@ std::vector<ExtendedGUID> ObjectSpaceStreamOfOIDs::parse(librevenge::RVNGInputSt
   for (uint32_t i=0; i < Count; i++)
   {
     temp.parse(input);
-    if (!guid.is_equal(temp.to_EGUID()))
+    if (eguid != temp.to_EGUID())
     {
       ONE_DEBUG_MSG(("\n"));
       ret.push_back(temp.to_EGUID());
