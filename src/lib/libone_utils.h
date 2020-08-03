@@ -112,7 +112,7 @@ unsigned long getLength(boost::shared_ptr<librevenge::RVNGInputStream> input);
 
 
 template<typename T>
-std::string int_to_hex(T i);
+std::string int_to_hex(const T &input);
 
 class EndOfStreamException
 {

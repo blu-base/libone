@@ -27,7 +27,8 @@ void ObjectSpace::parse(librevenge::RVNGInputStream *input, FileNode &node)
   // We should then be at the 'gosid' field
   input->seek(node.get_location() + node.header_size + m_fnd_list_ref.get_size_in_file(),
               librevenge::RVNG_SEEK_SET);
-  guid.parse(input);
+
+  input >> guid;
 
   list.parse(input);
 

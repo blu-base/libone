@@ -23,6 +23,9 @@
 namespace libone
 {
 
+enum { MaxStringGUIDLength = 38};
+enum { MinStringGUIDLength = 32};
+
 GUID::GUID() :
   Data1(0), Data2(0), Data3(0), Data4{0,0,0,0}
 {
@@ -33,15 +36,6 @@ GUID::GUID(const uint32_t data1, const uint16_t data2, const uint16_t data3,
            const uint16_t data4_3, const uint16_t data4_4) :
   Data1(data1), Data2(data2), Data3(data3), Data4{data4_1, data4_2, data4_3, data4_4}
 {
-}
-
-void GUID::zero()
-{
-  Data1 = 0;
-  Data2 = 0;
-  Data3 = 0;
-  for (int i=0; i < 4; i++)
-    Data4[i] = 0;
 }
 
 void GUID::parse(librevenge::RVNGInputStream *input)
@@ -56,12 +50,13 @@ void GUID::parse(librevenge::RVNGInputStream *input)
 std::string GUID::to_string()
 {
   std::stringstream stream;
-  stream << "{" << int_to_hex(Data1) << "-" << int_to_hex(Data2) << "-" << int_to_hex(Data3) << "-" << int_to_hex(Data4[0]) << "-";
+  stream << "{" <<  int_to_hex(Data1) << Data1 << "-" << int_to_hex(Data2) << "-" << int_to_hex(Data3) << "-" << int_to_hex(Data4[0]) << "-";
 
   for (int i=1; i<4; i++)
     stream << int_to_hex(Data4[i]);
 
   stream << "}";
+
   return stream.str();
 }
 
@@ -86,13 +81,34 @@ void GUID::from_string(std::string const str)
 {
   ONE_DEBUG_MSG(("\n"));
 
-  Data1 = strtol(str.substr(0, 8).c_str(), NULL, 16);
-  Data2 = strtol(str.substr(9, 4).c_str(), NULL, 16);
-  Data3 = strtol(str.substr(14, 4).c_str(), NULL, 16);
-  Data4[0] = strtol(str.substr(19, 4).c_str(), NULL, 16);
-  Data4[1] = strtol(str.substr(24, 4).c_str(), NULL, 16);
-  Data4[2] = strtol(str.substr(28, 4).c_str(), NULL, 16);
-  Data4[3] = strtol(str.substr(32, 4).c_str(), NULL, 16);
+  if (str.size() < MinStringGUIDLength -1
+      || (str.front() == '{' && str.size() > MaxStringGUIDLength - 1)
+      || (str.front() != '{' && str.at(8) == '-' && str.size() > MaxStringGUIDLength - 3))
+  {
+    (void) str;
+  }
+
+  size_t i{0};
+  str.at(i) == '{' ? i++ : 0;
+  Data1 = strtol(str.substr(i, 8).c_str(), NULL, 16);
+  i += 8;
+  str.at(i) == '-' ? i++ : 0;
+  Data2 = strtol(str.substr(i, 4).c_str(), NULL, 16);
+  i += 4;
+  str.at(i) == '-' ? i++ : 0;
+  Data3 = strtol(str.substr(i, 4).c_str(), NULL, 16);
+  i += 4;
+  str.at(i) == '-' ? i++ : 0;
+  Data4[0] = strtol(str.substr(i, 4).c_str(), NULL, 16);
+  i += 4;
+  str.at(i) == '-' ? i++ : 0;
+  Data4[1] = strtol(str.substr(i, 4).c_str(), NULL, 16);
+  i+= 4;
+  Data4[2] = strtol(str.substr(i, 4).c_str(), NULL, 16);
+  i+= 4;
+  Data4[3] = strtol(str.substr(i, 4).c_str(), NULL, 16);
+  i+= 4;
+
 
   ONE_DEBUG_MSG((" from string, dat good?\n"));
 

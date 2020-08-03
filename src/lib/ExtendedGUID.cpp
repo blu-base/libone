@@ -24,9 +24,9 @@ namespace libone
 
 void ExtendedGUID::parse(librevenge::RVNGInputStream *input)
 {
-  guid.parse(input);
+  input >> guid
 
-  n = readU32(input, false);
+        n = readU32(input, false);
 }
 
 std::string ExtendedGUID::to_string()
@@ -44,7 +44,7 @@ uint32_t ExtendedGUID::get_n()
 
 bool ExtendedGUID::is_equal(ExtendedGUID other)
 {
-  if ((guid.is_equal(other.guid)) && (n == other.n))
+  if ((guid == other.guid) && (n == other.n))
   {
     return true;
   }

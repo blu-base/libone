@@ -8,6 +8,9 @@
  */
 
 #include <cstdio>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
 
 #include "libone_utils.h"
 
@@ -233,21 +236,22 @@ unsigned long getLength(const boost::shared_ptr<librevenge::RVNGInputStream> inp
 }
 
 template<typename T>
-std::string int_to_hex(T i)
+std::string int_to_hex(const T &input)
 {
   std::stringstream stream;
-  stream << std::setfill('0') << std::setw(sizeof(T)*2) << std::hex << i;
+  stream << std::hex << std::setfill('0') << std::setw(sizeof(T)*2) << std::right << input;
+  ONE_DEBUG_MSG((stream.str()));
   return stream.str();
 }
 //explicit instances of int_to_hex
-template std::string int_to_hex<uint8_t>(uint8_t);
-template std::string int_to_hex<uint16_t>(uint16_t);
-template std::string int_to_hex<uint32_t>(uint32_t);
-template std::string int_to_hex<uint64_t>(uint64_t);
-template std::string int_to_hex<int8_t>(int8_t);
-template std::string int_to_hex<int16_t>(int16_t);
-template std::string int_to_hex<int32_t>(int32_t);
-template std::string int_to_hex<int64_t>(int64_t);
+template std::string int_to_hex<uint8_t>(const uint8_t &);
+template std::string int_to_hex<uint16_t>(const uint16_t &);
+template std::string int_to_hex<uint32_t>(const uint32_t &);
+template std::string int_to_hex<uint64_t>(const uint64_t &);
+template std::string int_to_hex<int8_t>(const int8_t &);
+template std::string int_to_hex<int16_t>(const int16_t &);
+template std::string int_to_hex<int32_t>(const int32_t &);
+template std::string int_to_hex<int64_t>(const int64_t &);
 
 EndOfStreamException::EndOfStreamException()
 {
