@@ -30,9 +30,8 @@ public:
   uint32_t n() const;
   void set_GUID(const GUID new_guid);
   void set_n(const uint32_t new_n);
+
   bool is_equal(ExtendedGUID other);
-
-
 
   void zero();
 
