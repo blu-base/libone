@@ -15,24 +15,38 @@
 
 namespace libone
 {
+/** @brief Composite structure class of a GUID object and an unsigned int. */
 class ExtendedGUID
 {
 public:
+  /** Default constructor. Initializes the m_guid and m_n variables to zero. */
   ExtendedGUID();
+  /** Constructor. Initialize specific GUID and int. */
   ExtendedGUID(const GUID guid, const uint32_t n);
 
+  /** Parses ExtendedGUID's content from RVNGInputStream byte stream. */
   void parse(librevenge::RVNGInputStream *input);
 
+  /** Converts ExtendedGUID object to a string of this format: {{00000000-0000-0000-0000-000000000000},0} */
   std::string to_string() const;
+
+  /** Parse ExtendedGUID object form a string of this format: {{00000000-0000-0000-0000-000000000000},0} */
   void from_string(const std::string str);
 
+  /** Getter for member object m_guid. */
   GUID guid() const;
+  /** Getter for member variable m_n */
   uint32_t n() const;
+
+  /** Setter for m_guid. */
   void set_GUID(const GUID new_guid);
+  /** Setter for m_n. */
   void set_n(const uint32_t new_n);
 
-  bool is_equal(ExtendedGUID other);
+  /** @Returns true if m_guid and m_n are identical between both ExtendedGUID objects. */
+  bool is_equal(const ExtendedGUID other) const;
 
+  /** Resets this ExtendedGUID to {{00000000-0000-0000-0000-000000000000},0} */
   void zero();
 
   friend librevenge::RVNGInputStream *operator>>(librevenge::RVNGInputStream *input, ExtendedGUID &obj);
@@ -41,8 +55,8 @@ public:
   friend bool operator!=(const ExtendedGUID &lhs, const ExtendedGUID &rhs) noexcept;
 
 private:
-  GUID guid;
-  uint32_t n;
+  GUID m_guid;
+  uint32_t m_n;
 };
 
 }

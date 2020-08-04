@@ -18,6 +18,7 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
 #include "common-types/GUIDTest.h"
+#include "common-types/ExtendedGUIDTest.h"
 
 int main()
 {
@@ -36,6 +37,7 @@ int main()
   CPPUNIT_NS::TestRunner runner;
   runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
   runner.addTest(GUIDTest::suite());
+  runner.addTest(ExtendedGUIDTest::suite());
   runner.run(controller);
 
   // output

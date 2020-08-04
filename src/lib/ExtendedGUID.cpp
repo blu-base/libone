@@ -21,50 +21,78 @@
 
 namespace libone
 {
+ExtendedGUID::ExtendedGUID() : m_guid(), m_n(0)
+{
+}
+
+ExtendedGUID::ExtendedGUID(const GUID guid, const uint32_t n) :
+  m_guid(guid), m_n(n)
+{}
 
 void ExtendedGUID::parse(librevenge::RVNGInputStream *input)
 {
-  guid.parse(input);
+  input >> m_guid;
 
-  n = readU32(input, false);
+  m_n = readU32(input, false);
 }
 
-std::string ExtendedGUID::to_string()
+std::string ExtendedGUID::to_string() const
 {
   std::stringstream stream;
-  stream << "{" << guid.to_string() << "," << n << "}";
+  stream << "{" << m_guid.to_string() << "," << m_n << "}";
 
   return stream.str();
 }
 
-uint32_t ExtendedGUID::get_n()
+std::string ExtendedGUID::from_string(const std::string str)
 {
-  return n;
 }
 
-bool ExtendedGUID::is_equal(ExtendedGUID other)
+GUID ExtendedGUID::guid() const
 {
-  if ((guid.is_equal(other.guid)) && (n == other.n))
-  {
-    return true;
-  }
-  return false;
+  return m_guid;
+}
+
+uint32_t ExtendedGUID::n() const
+{
+  return m_n;
+}
+
+bool ExtendedGUID::is_equal(const ExtendedGUID other) const
+{
+  return m_guid == other.m_guid && m_n == other.m_n;
 }
 
 void ExtendedGUID::zero()
 {
-  guid.zero();
-  n = 0;
+  m_guid.zero();
+  m_n = 0;
 }
 
 void ExtendedGUID::set_n(uint32_t new_n)
 {
-  n = new_n;
+  m_n = new_n;
 }
 
 void ExtendedGUID::set_GUID(GUID new_guid)
 {
-  guid = new_guid;
+  m_guid = new_guid;
+}
+
+librevenge::RVNGInputStream *operator>>(librevenge::RVNGInputStream *input, ExtendedGUID &obj)
+{
+  obj.parse(input);
+  return input;
+}
+
+bool operator==(const ExtendedGUID &lhs, const ExtendedGUID &rhs) noexcept
+{
+  return lhs.is_equal(rhs);
+}
+
+bool operator!=(const ExtendedGUID &lhs, const ExtendedGUID &rhs) noexcept
+{
+  return ! lhs.is_equal(rhs);
 }
 
 }

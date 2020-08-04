@@ -31,7 +31,9 @@ test_dep = declare_dependency(
 libone_test_files = [
   'test.cpp',
   'common-types/GUIDTest.h',
-  'common-types/GUIDTest.cpp'
+  'common-types/GUIDTest.cpp',
+  'common-types/ExtendedGUIDTest.h',
+  'common-types/ExtendedGUIDTest.cpp',
 ]
 
 if not meson.is_subproject()
