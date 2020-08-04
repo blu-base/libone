@@ -18,17 +18,32 @@ namespace libone
 class ExtendedGUID
 {
 public:
+  ExtendedGUID();
+  ExtendedGUID(const GUID guid, const uint32_t n);
+
   void parse(librevenge::RVNGInputStream *input);
-  void zero();
-  std::string to_string();
-  uint32_t get_n();
-  void set_GUID(GUID new_guid);
-  void set_n(uint32_t new_n);
+
+  std::string to_string() const;
+  void from_string(const std::string str);
+
+  GUID guid() const;
+  uint32_t n() const;
+  void set_GUID(const GUID new_guid);
+  void set_n(const uint32_t new_n);
   bool is_equal(ExtendedGUID other);
-  uint32_t n = 0;
+
+
+
+  void zero();
+
+  friend librevenge::RVNGInputStream *operator>>(librevenge::RVNGInputStream *input, ExtendedGUID &obj);
+
+  friend bool operator==(const ExtendedGUID &lhs, const ExtendedGUID &rhs) noexcept;
+  friend bool operator!=(const ExtendedGUID &lhs, const ExtendedGUID &rhs) noexcept;
 
 private:
-  GUID guid = GUID();
+  GUID guid;
+  uint32_t n;
 };
 
 }
