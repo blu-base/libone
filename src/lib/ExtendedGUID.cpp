@@ -21,6 +21,12 @@
 
 namespace libone
 {
+// {{FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF},4294967295}
+enum { MaxStringEGUIDLength = 51};
+// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,0
+enum { MinStringEGUIDLength = 34};
+
+
 ExtendedGUID::ExtendedGUID() : m_guid(), m_n(0)
 {
 }
@@ -44,9 +50,46 @@ std::string ExtendedGUID::to_string() const
   return stream.str();
 }
 
-std::string ExtendedGUID::from_string(const std::string str)
+void ExtendedGUID::from_string(const std::string str)
 {
+  if (str.size() < MinStringEGUIDLength -1)
+  {
+    (void) str;
+  }
+
+  if (
+    (str.front() == '{' && str.size() > MaxStringEGUIDLength - 1)
+    || (str.front() != '{' && str.at(9) == '-' && str.size() > MaxStringEGUIDLength - 3))
+  {
+    (void) str;
+  }
+
+  // separator position
+  auto s_pos = str.find(',');
+
+  if (s_pos == std::string::npos)
+  {
+    ONE_DEBUG_MSG(("Parsing of ExtendedGUID failed. No comma separator"));
+    (void) str;
+  }
+
+  size_t i{0};
+  str.at(i) == '{' ? i++ : 0;
+
+  m_guid.from_string(str.substr(i, s_pos-i-1));
+
+  // remaining size
+  size_t n_size = str.size() - s_pos -1 ;
+
+  str.at(str.size() -1) == '}' ? n_size-- : 0;
+
+  m_n = (uint32_t) strtol(str.substr(s_pos + 1, n_size).c_str(), NULL, 10);
+
+  (void) str;
+
+
 }
+
 
 GUID ExtendedGUID::guid() const
 {

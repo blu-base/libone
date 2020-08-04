@@ -91,8 +91,8 @@ void ExtendedGUIDTest::test_from_string()
   std::vector<std::tuple<std::string, uint32_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint32_t> > cases {};
 
   cases.emplace_back("{{00000000-0000-0000-0000-000000000000},0}", 0, 0, 0, 0, 0, 0, 0,0);
-  cases.emplace_back("{{FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF},4294967295}", 0xFFFFFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFFFFFF);
-  cases.emplace_back("{{7B5C52E4-D88C-4DA7-AEB1-5378D02996D3},255}", 0X7b5c52e4, 0Xd88c, 0X4da7, 0Xaeb1, 0X5378, 0Xd029, 0X96d3,0xFF);
+  cases.emplace_back("{{ffffffff-ffff-ffff-ffff-ffffffffffff},4294967295}", 0xFFFFFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFFFFFF);
+  cases.emplace_back("{{7b5c52e4-d88c-4da7-aeb1-5378d02996d3},255}", 0X7b5c52e4, 0Xd88c, 0X4da7, 0Xaeb1, 0X5378, 0Xd029, 0X96d3,0xFF);
 
 
   for (size_t i {0}; i < cases.size(); i++)
