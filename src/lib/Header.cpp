@@ -41,6 +41,9 @@ void Header::parse(librevenge::RVNGInputStream *input)
   //guidFileFormat.parse(input);
   input >> guidFileFormat;
 
+
+  ONE_DEBUG_MSG(("%s\n",guidFileFormat.to_string().c_str()));
+
   ffvLastCodeThatWroteToThisFile = readU32(input, false);
   ffvOldestCodeThatMayReadThisFile = readU32(input, false);
   ffvOldestCodeThatHasWrittenToThisFile = readU32(input, false);
