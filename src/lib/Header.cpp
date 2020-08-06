@@ -29,13 +29,17 @@ void Header::parse(librevenge::RVNGInputStream *input)
 {
   input->seek(OFFSET_HEADER, librevenge::RVNG_SEEK_SET);
 
-  guidFileType.parse(input);
+  //guidFileType.parse(input);
+  input >> guidFileType;
 
-  guidFile.parse(input);
+  //guidFile.parse(input);
+  input >> guidFile;
 
-  guidLegacyFileVersion.parse(input);
+  //guidLegacyFileVersion.parse(input);
+  input >> guidLegacyFileVersion;
 
-  guidFileFormat.parse(input);
+  //guidFileFormat.parse(input);
+  input >> guidFileFormat;
 
   ffvLastCodeThatWroteToThisFile = readU32(input, false);
   ffvOldestCodeThatMayReadThisFile = readU32(input, false);
