@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "librevenge-stream/librevenge-stream.h"
+#include "../libone_utils.h"
 
 namespace libone
 {
@@ -15,12 +15,11 @@ protected:
 public:
   virtual ~IFileNodeData();
 
-  friend librevenge::RVNGInputStream &operator>>(librevenge::RVNGInputStream &input, IFileNodeData &obj);
+  friend const libone::RVNGInputStreamPtr_t &operator>>(const libone::RVNGInputStreamPtr_t &input, IFileNodeData &obj);
 
-  virtual void parse(librevenge::RVNGInputStream &input) = 0;
+  virtual void parse(const libone::RVNGInputStreamPtr_t &input) = 0;
 
   virtual std::string to_string() const = 0;
-
 
 };
 
