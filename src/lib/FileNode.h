@@ -10,10 +10,14 @@
 #ifndef INCLUDED_LIBONE_FILENODE_H
 #define INCLUDED_LIBONE_FILENODE_H
 
-#include "FileNodeChunkReference.h"
+
+#include "fileNodeData/FileNodeData.h"
 #include <librevenge-stream/librevenge-stream.h>
 
+
 #include "libone_utils.h"
+#include "FileNodeChunkReference.h"
+
 
 
 namespace libone
@@ -27,7 +31,7 @@ enum fnd_basetype
   fnd_invalid_basetype
 };
 
-enum fnd_id
+enum class FndId
 {
   ObjectSpaceManifestRootFND                  = 0x004,
   ObjectSpaceManifestListReferenceFND         = 0x008,
@@ -71,46 +75,56 @@ enum fnd_id
   fnd_invalid_id
 };
 
-std::string fnd_id_to_string(enum fnd_id id_fnd);
+std::string fnd_id_to_string(FndId id_fnd);
 
 class FileNode
 {
 public:
+
+  ~FileNode();
   void parse(const libone::RVNGInputStreamPtr_t &input);
   std::string to_string();
 
-  void skip_node(const libone::RVNGInputStreamPtr_t &input);
-
-  enum fnd_id get_FileNodeID()
+  FndId get_FileNodeID()
   {
     return m_fnd_id;
   }
-  uint32_t get_Size()
+
+  StpFormat get_stp_format()
   {
-    return m_size_in_file;
+    return m_fncr.get_stp_fmt();
   }
+
+  CbFormat get_cb_format()
+  {
+    return m_fncr.get_cb_fmt();
+  }
+
+  uint64_t get_Size()
+  {
+    return m_fncr.cb();
+  }
+
   enum fnd_basetype get_Basetype()
   {
     return m_base_type;
   }
-  FileNodeChunkReference get_fnd()
+  IFileNodeData *get_fnd()
   {
     return m_fnd;
   }
-  uint32_t get_location()
+  uint64_t get_location()
   {
-    return m_offset;
+    return m_fncr.stp();
   }
 
-  static const uint32_t header_size = sizeof(uint32_t);
 private:
-  uint32_t m_offset = 0;
-  uint32_t m_size_in_file = 0;
-  uint32_t m_header_size = 0;
-  enum fnd_id m_fnd_id = fnd_invalid_id;
+  FileNodeChunkReference m_fncr = FileNodeChunkReference();
+
+  FndId m_fnd_id = FndId::fnd_invalid_id;
   enum fnd_basetype m_base_type = fnd_invalid_basetype;
   void parse_header(const libone::RVNGInputStreamPtr_t &input);
-  FileNodeChunkReference m_fnd = FileNodeChunkReference(stp_invalid, cb_invalid, 0);
+  IFileNodeData *m_fnd = nullptr;
 
   static const uint32_t mask_fnd_id        = 0x3FF;
   static const uint32_t mask_fnd_base_type = 0xF;
