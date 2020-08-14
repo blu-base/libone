@@ -237,22 +237,22 @@ unsigned long getLength(const std::shared_ptr<librevenge::RVNGInputStream> input
 
 const RVNGInputStreamPtr_t &operator>>(const RVNGInputStreamPtr_t &input, uint8_t &val)
 {
-  val = readU8(input);
+  val = readU8(input, false);
   return input;
 }
 const RVNGInputStreamPtr_t &operator>>(const RVNGInputStreamPtr_t &input, uint16_t &val)
 {
-  val = readU16(input);
+  val = readU16(input, false);
   return input;
 }
 const RVNGInputStreamPtr_t &operator>>(const RVNGInputStreamPtr_t &input, uint32_t &val)
 {
-  val = readU32(input);
+  val = readU32(input, false);
   return input;
 }
 const RVNGInputStreamPtr_t &operator>>(const RVNGInputStreamPtr_t &input, uint64_t &val)
 {
-  val = readU64(input);
+  val = readU64(input, false);
   return input;
 }
 

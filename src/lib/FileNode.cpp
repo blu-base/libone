@@ -24,7 +24,12 @@
 namespace libone
 {
 
-std::string FndId_to_string(FileNode::FndId id_fnd)
+FileNode::~FileNode()
+{
+  delete m_fnd;
+}
+
+std::string FndId_to_string(FndId id_fnd)
 {
   std::stringstream stream;
 
@@ -86,7 +91,7 @@ std::string FndId_to_string(FileNode::FndId id_fnd)
     break;
   case FndId::fnd_invalid_id:
   default:
-    stream << "dunno but value is " << id_fnd;
+    stream << "Invalid FND";
     break;
   }
   return stream.str();
@@ -98,8 +103,6 @@ void FileNode::parse(const libone::RVNGInputStreamPtr_t &input)
 
   switch (m_fnd_id)
   {
-    m_fnd = new ChunkTerminatorFND();
-    break;
   case FndId::DataSignatureGroupDefinitionFND:
     m_fnd = new DataSignatureGroupDefinitionFND();
     break;
@@ -232,9 +235,8 @@ std::string FileNode::to_string()
 {
   std::stringstream stream;
 
-  stream << FndId_to_string(m_FndId);
+  stream << fnd_id_to_string(m_fnd_id);
   stream << "; ";
-  stream << "size " << m_size_in_file << "; ";
 
   stream << std::hex << "base_type ";
   switch (m_base_type)
@@ -243,10 +245,10 @@ std::string FileNode::to_string()
     stream << "fnd_no_data";
     break;
   case fnd_ref_data:
-    stream << "fnd_ref_data@0x" << m_fnd.get_location();
+    stream << "fnd_ref_data@0x" << m_fncr.stp();
     break;
   case fnd_ref_filenodelist:
-    stream << "fnd_ref_filenodelist@0x" << m_fnd.get_location();
+    stream << "fnd_ref_filenodelist@0x" << m_fncr.stp();
     break;
   default:
     stream << "UNKNOWN BASETYPE";
@@ -273,13 +275,6 @@ void FileNode::parse_header(const libone::RVNGInputStreamPtr_t &input)
 
   m_fncr = FileNodeChunkReference(stp, cb, stp_format, cb_format);
 
-  if (reserved == 0)
-  {
-    std::bitset<13> z(m_size_in_file);
-    ONE_DEBUG_MSG(("%s\n", z.to_string().c_str()));
-    ONE_DEBUG_MSG(("warning: d is zero\n"));
-  }
-  assert(d == 1);
 }
 
 }

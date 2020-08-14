@@ -36,7 +36,7 @@ const libone::RVNGInputStreamPtr_t &operator>>(const libone::RVNGInputStreamPtr_
 }
 
 
-bool FileNodeChunkReference::is_fcrNil()
+bool FileNodeChunkReference::is_fcrNil() const
 {
   bool cbval = (m_cb == 0);
   switch (m_format_stp)
@@ -56,12 +56,12 @@ bool FileNodeChunkReference::is_fcrNil()
   }
 }
 
-bool FileNodeChunkReference::is_fcrZero()
+bool FileNodeChunkReference::is_fcrZero() const
 {
   return ((m_stp == 0) && (m_cb == 0));
 }
 
-uint64_t FileNodeChunkReference::stp()
+uint64_t FileNodeChunkReference::stp() const
 {
   switch (m_format_stp)
   {
@@ -79,7 +79,7 @@ uint64_t FileNodeChunkReference::stp()
   }
 }
 
-uint64_t FileNodeChunkReference::cb()
+uint64_t FileNodeChunkReference::cb() const
 {
   switch (m_format_cb)
   {
@@ -97,7 +97,7 @@ uint64_t FileNodeChunkReference::cb()
   }
 }
 
-uint32_t FileNodeChunkReference::get_size_in_file()
+uint32_t FileNodeChunkReference::get_size_in_file() const
 {
   uint32_t ret = 0;
   switch (m_format_stp)
@@ -184,14 +184,6 @@ void FileNodeChunkReference::parse(const libone::RVNGInputStreamPtr_t &input)
   }
 
   return;
-}
-
-void FileNodeChunkReference::set_zero()
-{
-  m_stp = 0;
-  m_cb = 0;
-  m_format_stp = StpFormat::stp_invalid;
-  m_format_cb = CbFormat::cb_invalid;
 }
 
 }

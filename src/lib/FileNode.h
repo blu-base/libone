@@ -85,27 +85,27 @@ public:
   void parse(const libone::RVNGInputStreamPtr_t &input);
   std::string to_string();
 
-  FndId get_FileNodeID()
+  FndId get_FileNodeID() const
   {
     return m_fnd_id;
   }
 
-  StpFormat get_stp_format()
+  StpFormat get_stp_format() const
   {
     return m_fncr.get_stp_fmt();
   }
 
-  CbFormat get_cb_format()
+  CbFormat get_cb_format() const
   {
     return m_fncr.get_cb_fmt();
   }
 
-  uint64_t get_Size()
+  uint64_t get_Size() const
   {
     return m_fncr.cb();
   }
 
-  enum fnd_basetype get_Basetype()
+  enum fnd_basetype get_Basetype() const
   {
     return m_base_type;
   }
@@ -113,10 +113,17 @@ public:
   {
     return m_fnd;
   }
-  uint64_t get_location()
+  uint64_t get_location() const
   {
     return m_fncr.stp();
   }
+
+  FileNodeChunkReference get_fncr() const
+  {
+    return m_fncr;
+  }
+
+  static constexpr const uint32_t header_size = sizeof(uint32_t);
 
 private:
   FileNodeChunkReference m_fncr = FileNodeChunkReference();

@@ -45,24 +45,24 @@ public:
 
   void parse(const libone::RVNGInputStreamPtr_t &input);
 
-  bool is_fcrNil();
-  bool is_fcrZero();
+  bool is_fcrNil() const;
+  bool is_fcrZero() const;
 
   /** returns the uncompressed stream position of the referenced chunk. */
-  uint64_t stp();
+  uint64_t stp() const;
 
   /** returns the uncompressed byte count of the referenced chunk. */
-  uint64_t cb();
+  uint64_t cb() const;
 
   /** returns the size of the FileNodeChunkReference object in number of bytes. */
-  uint32_t get_size_in_file();
+  uint32_t get_size_in_file() const;
 
 
-  StpFormat get_stp_fmt()
+  StpFormat get_stp_fmt() const
   {
     return m_format_stp;
   }
-  CbFormat get_cb_fmt()
+  CbFormat get_cb_fmt() const
   {
     return m_format_cb;
   }
