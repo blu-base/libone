@@ -1,11 +1,11 @@
 #include "ObjectDeclaration2LargeRefCountFND.h"
-#include "../helper/Helper.h"
 
 namespace libone
 {
+
 ObjectDeclaration2LargeRefCountFND::ObjectDeclaration2LargeRefCountFND(
-  FNCR_STP_FORMAT stpFormat, FNCR_CB_FORMAT cbFormat)
-  : m_BlobRef(stpFormat, cbFormat), m_cRef() {}
+  StpFormat stpFormat, CbFormat cbFormat)
+  : m_BlobRef(stpFormat, cbFormat), m_body(), m_cRef() {}
 
 ObjectDeclaration2LargeRefCountFND::~ObjectDeclaration2LargeRefCountFND() {}
 
@@ -41,23 +41,16 @@ void ObjectDeclaration2LargeRefCountFND::setBlobRef(
   m_BlobRef = BlobRef;
 }
 
-void ObjectDeclaration2LargeRefCountFND::deserialize(QDataStream &ds)
+void ObjectDeclaration2LargeRefCountFND::parse(const libone::RVNGInputStreamPtr_t &input)
 {
-  void ObjectDeclaration2LargeRefCountFND::parse(const libone::RVNGInputStreamPtr_t &input)
-  {
-    input >> m_BlobRef;
-    input >> m_body;
-    input >> m_cRef;
-  }
+  input >> m_BlobRef;
+  input >> m_body;
+  input >> m_cRef;
+}
 
-  void ObjectDeclaration2LargeRefCountFND::parse(const libone::RVNGInputStreamPtr_t &input)
-  {
-    input >> m_ref;
-  }
-
-  std::string ObjectDeclaration2LargeRefCountFND::to_string() const
-  {
-    return "";
-  }
+std::string ObjectDeclaration2LargeRefCountFND::to_string() const
+{
+  return "";
+}
 
 } // namespace libone

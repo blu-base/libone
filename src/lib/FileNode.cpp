@@ -29,7 +29,7 @@ FileNode::~FileNode()
   delete m_fnd;
 }
 
-std::string FndId_to_string(FndId id_fnd)
+std::string fnd_id_to_string(FndId id_fnd)
 {
   std::stringstream stream;
 
