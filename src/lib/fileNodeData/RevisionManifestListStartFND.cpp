@@ -2,7 +2,7 @@
 
 namespace libone
 {
-RevisionManifestListStartFND::RevisionManifestListStartFND() : m_nInstance(), m_gosid() {}
+RevisionManifestListStartFND::RevisionManifestListStartFND() : m_gosid(), m_nInstance()  {}
 RevisionManifestListStartFND::~RevisionManifestListStartFND() {}
 
 ExtendedGUID RevisionManifestListStartFND::getGosid() const

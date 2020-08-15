@@ -266,7 +266,6 @@ void FileNode::parse_header(const libone::RVNGInputStreamPtr_t &input)
 
   input >> temp;
 
-  uint16_t reserved = temp >> 31;
   StpFormat stp_format = static_cast<StpFormat>((temp >> shift_format_stp) & mask_format_stp);
   CbFormat cb_format = static_cast<CbFormat>((temp >> shift_format_cb) & mask_format_cb);
   m_base_type = static_cast<fnd_basetype>((temp >> shift_base_type) & mask_fnd_base_type);

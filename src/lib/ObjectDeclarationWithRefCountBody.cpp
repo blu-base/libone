@@ -4,8 +4,8 @@ namespace libone
 {
 
 ObjectDeclarationWithRefCountBody::ObjectDeclarationWithRefCountBody()
-  : m_oid(), m_jci(), m_odcs(), m_fReserved1(), m_fReserved2(),
-    m_fHasOidReferences(false), m_fHasOsidReferences(false) {}
+  : m_oid(), m_jci(), m_odcs(), m_fReserved1(),
+    m_fHasOidReferences(false), m_fHasOsidReferences(false), m_fReserved2() {}
 
 bool ObjectDeclarationWithRefCountBody::getFHasOsidReferences() const
 {
