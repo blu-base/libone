@@ -32,27 +32,27 @@ public:
   }
   uint16_t index()
   {
-    return (value & 0xFFFF);
+    return static_cast<uint16_t>(value & 0xFFFF);
   }
   uint16_t IsBinary()
   {
-    return (value & 0x10000) >> 16;
+    return static_cast<uint16_t>((value & 0x10000) >> 16);
   }
   uint16_t IsPropertySet()
   {
-    return (value & 0x20000) >> 17;
+    return static_cast<uint16_t>((value & 0x20000) >> 17);
   }
   uint16_t IsGraphNode()
   {
-    return (value & 0x40000) >> 18;
+    return static_cast<uint16_t>((value & 0x40000) >> 18);
   }
   uint16_t IsFileData()
   {
-    return (value & 0x80000) >> 19;
+    return static_cast<uint16_t>((value & 0x80000) >> 19);
   }
   uint16_t IsReadOnly()
   {
-    return (value & 0x100000) >> 20;
+    return static_cast<uint16_t>((value & 0x100000) >> 20);
   }
   void set_IsReadOnly(bool val)
   {

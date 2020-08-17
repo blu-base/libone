@@ -32,11 +32,11 @@ void TransactionLog::parse(const libone::RVNGInputStreamPtr_t &input)
 {
   TransactionLogFragment fragment = TransactionLogFragment();
   uint64_t location = m_offset;
-  uint32_t transactions_parsed = 0;
+  uint64_t transactions_parsed = 0;
 
   DBMSG << "begin, input@" << input->tell() << std::endl;
 
-  for (uint32_t i=0; i<m_total_transactions;)
+  for (uint64_t i=0; i<m_total_transactions;)
   {
     DBMSG << "seeking to fragment @" << location << std::endl;
     input->seek(location, librevenge::RVNG_SEEK_SET);

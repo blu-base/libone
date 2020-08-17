@@ -27,9 +27,9 @@ TransactionLogFragment::TransactionLogFragment() :
 {}
 
 
-int TransactionLogFragment::parse(const libone::RVNGInputStreamPtr_t &input,
-                                  uint64_t location, uint32_t size,
-                                  uint32_t transactions_to_parse)
+uint64_t TransactionLogFragment::parse(const libone::RVNGInputStreamPtr_t &input,
+                                       uint64_t location, uint64_t size,
+                                       uint64_t transactions_to_parse)
 {
   m_offset = location;
   m_size = size;
@@ -37,7 +37,7 @@ int TransactionLogFragment::parse(const libone::RVNGInputStreamPtr_t &input,
 
   DBMSG << "Trying to parse " << m_transactions_to_parse << " transactions" << std::endl;
 
-  for (uint32_t i=0; i < m_transactions_to_parse; i++)
+  for (uint64_t i=0; i < m_transactions_to_parse; i++)
   {
     TransactionEntry entry = TransactionEntry();
     entry.parse(input);

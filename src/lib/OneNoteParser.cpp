@@ -38,7 +38,7 @@ OneNoteParser::OneNoteParser(const libone::RVNGInputStreamPtr_t &input, libreven
   parse_root_file_node_list(input, header, RootObject);
   ONE_DEBUG_MSG(("root object is %s\n", RootObject.to_string().c_str()));
 
-  for (auto i: ObjectSpaces)
+  for (const auto &i: ObjectSpaces)
   {
     ONE_DEBUG_MSG(("object space %s\n", i.first.c_str()));
   }
@@ -89,6 +89,43 @@ void OneNoteParser::parse_root_file_node_list(const libone::RVNGInputStreamPtr_t
       break;
     case FndId::FileDataStoreListReferenceFND:
       break;
+    case FndId::ObjectSpaceManifestListStartFND:
+    case FndId::RevisionManifestListReferenceFND:
+    case FndId::RevisionManifestListStartFND:
+    case FndId::RevisionManifestStart4FND:
+    case FndId::RevisionManifestEndFND:
+    case FndId::RevisionManifestStart6FND:
+    case FndId::RevisionManifestStart7FND:
+    case FndId::GlobalIdTableStartFNDX:
+    case FndId::GlobalIdTableStart2FND:
+    case FndId::GlobalIdTableEntryFNDX:
+    case FndId::GlobalIdTableEntry2FNDX:
+    case FndId::GlobalIdTableEntry3FNDX:
+    case FndId::GlobalIdTableEndFNDX:
+    case FndId::ObjectDeclarationWithRefCountFNDX:
+    case FndId::ObjectDeclarationWithRefCount2FNDX:
+    case FndId::ObjectRevisionWithRefCountFNDX:
+    case FndId::ObjectRevisionWithRefCount2FNDX:
+    case FndId::RootObjectReference2FNDX:
+    case FndId::RootObjectReference3FND:
+    case FndId::RevisionRoleDeclarationFND:
+    case FndId::RevisionRoleAndContextDeclarationFND:
+    case FndId::ObjectDeclarationFileData3RefCountFND:
+    case FndId::ObjectDeclarationFileData3LargeRefCountFND:
+    case FndId::ObjectDataEncryptionKeyV2FNDX:
+    case FndId::ObjectInfoDependencyOverridesFND:
+    case FndId::DataSignatureGroupDefinitionFND:
+    case FndId::FileDataStoreObjectReferenceFND:
+    case FndId::ObjectDeclaration2RefCountFND:
+    case FndId::ObjectDeclaration2LargeRefCountFND:
+    case FndId::ObjectGroupListReferenceFND:
+    case FndId::ObjectGroupStartFND:
+    case FndId::ObjectGroupEndFND:
+    case FndId::HashedChunkDescriptor2FND:
+    case FndId::ReadOnlyObjectDeclaration2RefCountFND:
+    case FndId::ReadOnlyObjectDeclaration2LargeRefCountFND:
+    case FndId::ChunkTerminatorFND:
+    case FndId::fnd_invalid_id:
     default:
       assert(false);
       break;

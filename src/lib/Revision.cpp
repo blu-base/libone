@@ -46,32 +46,29 @@ std::string Revision::to_string()
   return stream.str();
 }
 
+/// \todo the raw parsing part seems obsolete, get values from node.get_fnd().
 void Revision::parse_dependencies(const libone::RVNGInputStreamPtr_t &input, FileNode node)
 {
-  CompactID temp;
-  uint32_t n_8bitoverrides;
-  uint32_t n_32bitoverrides;
-  uint32_t crc;
+
+  libone::ObjectInfoDependencyOverridesFND tnode = *dynamic_cast<libone::ObjectInfoDependencyOverridesFND *>(node.get_fnd());
+
+//   CompactID temp;
+  uint32_t n_8bitoverrides = tnode.getData().c8BitOverrides();
+  uint32_t n_32bitoverrides = tnode.getData().c32BitOverrides();;
+  uint32_t crc = tnode.getData().crc();
   uint32_t i = 0;
-  long old = -1;
+//   long old = -1;
 
   (void) crc;
   (void) i;
   (void) n_8bitoverrides;
   (void) n_32bitoverrides;
 
-  if (!node.get_fncr().is_fcrNil())
+  /*
+  if (!tnode.getRef().is_fcrNil())
   {
-    ONE_DEBUG_MSG((" for dependencies\n"));
-    old = input->tell();
-    input->seek(node.get_fncr().stp(), librevenge::RVNG_SEEK_SET);
-  }
 
-  n_8bitoverrides = readU32(input, false);
-  n_32bitoverrides = readU32(input, false);
-  ONE_DEBUG_MSG((" 32bit overrides\n"));
-  crc = readU32(input, false);
-  /*    for (i = 0; i < n_8bitoverrides; i++) {
+      for (i = 0; i < n_8bitoverrides; i++) {
         temp.parse(input);
         group.objects[temp.to_EGUID().to_string()].ref_count = readU8 (input);
         ONE_DEBUG_MSG(("\n"));
@@ -80,10 +77,12 @@ void Revision::parse_dependencies(const libone::RVNGInputStreamPtr_t &input, Fil
         temp.parse(input);
         group.objects[temp.to_EGUID().to_string()].ref_count = readU32(input);
         ONE_DEBUG_MSG(("\n"));
-      } */
+      }
 
-  if (!node.get_fncr().is_fcrNil())
-    input->seek(old, librevenge::RVNG_SEEK_SET);
+      if (!tnode.getRef().is_fcrNil())  {
+        input->seek(old, librevenge::RVNG_SEEK_SET);
+      }
+      */
 
 }
 
@@ -91,11 +90,13 @@ void Revision::to_document(librevenge::RVNGDrawingInterface *document)
 {
   (void) document;
 
-  for (auto i: root_objects)
+  /*
+  for (const auto &i: root_objects)
   {
     ONE_DEBUG_MSG(("\n"));
     //objects[i.first].to_document(document, objects);
   }
+  */
 
 }
 

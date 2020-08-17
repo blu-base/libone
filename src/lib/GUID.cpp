@@ -90,7 +90,7 @@ GUID::GUID(std::string const str) : GUID()
   i += 4;
 
   Data4[3] = (uint16_t) strtol(str.substr(i,4).c_str(), NULL, 16);
-  i += 4;
+//   i += 4;
 }
 
 uint32_t GUID::data1() const

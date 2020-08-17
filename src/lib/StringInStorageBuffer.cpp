@@ -23,8 +23,8 @@ void StringInStorageBuffer::parse(const libone::RVNGInputStreamPtr_t &input)
 {
   std::stringstream stream;
   length = readU32(input);
-  std::vector<char> string;
-  char *buf = (char *) readNBytes(input, length*2);
+  std::vector<unsigned char> string;
+  const unsigned char *buf = readNBytes(input, length*2);
   string.assign(buf, buf+length*2);
   ustring = librevenge::RVNGString((char *) &string[0]);
 

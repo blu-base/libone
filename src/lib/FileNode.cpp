@@ -26,7 +26,10 @@ namespace libone
 
 FileNode::~FileNode()
 {
-  delete m_fnd;
+  if (m_fnd != nullptr)
+  {
+    delete m_fnd;
+  }
 }
 
 std::string fnd_id_to_string(FndId id_fnd)
@@ -88,6 +91,69 @@ std::string fnd_id_to_string(FndId id_fnd)
     break;
   case FndId::ObjectGroupEndFND:
     stream << "ObjectGroupEndFND";
+    break;
+  case FndId::RevisionManifestEndFND:
+    stream << "RevisionManifestEndFND";
+    break;
+  case FndId::GlobalIdTableStartFNDX:
+    stream << "GlobalIdTableStartFNDX";
+    break;
+  case FndId::GlobalIdTableEntry2FNDX:
+    stream << "GlobalIdTableEntry2FNDX";
+    break;
+  case FndId::GlobalIdTableEntry3FNDX:
+    stream << "GlobalIdTableEntry3FNDX";
+    break;
+  case FndId::ObjectDeclarationWithRefCountFNDX:
+    stream << "ObjectDeclarationWithRefCountFNDX";
+    break;
+  case FndId::ObjectDeclarationWithRefCount2FNDX:
+    stream << "ObjectDeclarationWithRefCount2FNDX";
+    break;
+  case FndId::ObjectRevisionWithRefCountFNDX:
+    stream << "ObjectRevisionWithRefCountFNDX";
+    break;
+  case FndId::ObjectRevisionWithRefCount2FNDX:
+    stream << "ObjectRevisionWithRefCount2FNDX";
+    break;
+  case FndId::RootObjectReference2FNDX:
+    stream << "RootObjectReference2FNDX";
+    break;
+  case FndId::RootObjectReference3FND:
+    stream << "RootObjectReference3FND";
+    break;
+  case FndId::RevisionRoleDeclarationFND:
+    stream << "RevisionRoleDeclarationFND";
+    break;
+  case FndId::RevisionRoleAndContextDeclarationFND:
+    stream << "RevisionRoleAndContextDeclarationFND";
+    break;
+  case FndId::ObjectDeclarationFileData3RefCountFND:
+    stream << "ObjectDeclarationFileData3RefCountFND";
+    break;
+  case FndId::ObjectDeclarationFileData3LargeRefCountFND:
+    stream << "ObjectDeclarationFileData3LargeRefCountFND";
+    break;
+  case FndId::ObjectDataEncryptionKeyV2FNDX:
+    stream << "ObjectDataEncryptionKeyV2FNDX";
+    break;
+  case FndId::ObjectInfoDependencyOverridesFND:
+    stream << "ObjectInfoDependencyOverridesFND";
+    break;
+  case FndId::FileDataStoreObjectReferenceFND:
+    stream << "FileDataStoreObjectReferenceFND";
+    break;
+  case FndId::ObjectDeclaration2LargeRefCountFND:
+    stream << "ObjectDeclaration2LargeRefCountFND";
+    break;
+  case FndId::HashedChunkDescriptor2FND:
+    stream << "HashedChunkDescriptor2FND";
+    break;
+  case FndId::ReadOnlyObjectDeclaration2RefCountFND:
+    stream << "ReadOnlyObjectDeclaration2RefCountFND";
+    break;
+  case FndId::ReadOnlyObjectDeclaration2LargeRefCountFND:
+    stream << "ReadOnlyObjectDeclaration2LargeRefCountFND";
     break;
   case FndId::fnd_invalid_id:
   default:
@@ -250,6 +316,7 @@ std::string FileNode::to_string()
   case fnd_ref_filenodelist:
     stream << "fnd_ref_filenodelist@0x" << m_fncr.stp();
     break;
+  case fnd_invalid_basetype:
   default:
     stream << "UNKNOWN BASETYPE";
     assert(false);
