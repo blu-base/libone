@@ -153,10 +153,10 @@ void FileNodeChunkReference::parse(const libone::RVNGInputStreamPtr_t &input)
     m_stp = readU32(input, false);
     break;
   case StpFormat::stp_compressed_2:
-    m_stp = readU16(input, false) * 8;
+    m_stp = readU16(input, false);
     break;
   case StpFormat::stp_compressed_4:
-    m_stp = readU32(input, false) * 8;
+    m_stp = readU32(input, false);
     break;
   case StpFormat::stp_invalid:
   default:
@@ -173,7 +173,7 @@ void FileNodeChunkReference::parse(const libone::RVNGInputStreamPtr_t &input)
     m_cb = readU64(input, false);
     break;
   case CbFormat::cb_compressed_1:
-    m_cb = readU8(input) * 8;
+    m_cb = readU8(input);
     break;
   case CbFormat::cb_compressed_2:
     m_cb = readU16(input, false);

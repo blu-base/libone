@@ -24,4 +24,8 @@ std::string ObjectSpaceManifestListStartFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectSpaceManifestListStartFND::clone() const
+{
+  return std::make_unique<ObjectSpaceManifestListStartFND>(*this);
+}
 } // namespace libone

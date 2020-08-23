@@ -67,7 +67,7 @@ std::string FileNodeList::to_string()
   std::stringstream stream;
   stream << std::dec << "m_fnd_list_id " << m_fnd_list_id << '\n';
   stream << "nFragmentSequence " << m_fragment_sequence << '\n';
-  for (FileNode i: rgFileNodes)
+  for (const FileNode &i: rgFileNodes)
     stream << i.to_string() << '\n';
   return stream.str();
 }

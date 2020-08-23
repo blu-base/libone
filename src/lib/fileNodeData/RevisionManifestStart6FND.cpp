@@ -58,4 +58,8 @@ std::string RevisionManifestStart6FND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> RevisionManifestStart6FND::clone() const
+{
+  return std::make_unique<RevisionManifestStart6FND>(*this);
+}
 } // namespace libone

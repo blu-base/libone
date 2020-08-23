@@ -37,4 +37,8 @@ std::string RootObjectReference2FNDX::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> RootObjectReference2FNDX::clone() const
+{
+  return std::make_unique<RootObjectReference2FNDX>(*this);
+}
 } // namespace libone

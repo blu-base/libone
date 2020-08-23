@@ -35,4 +35,8 @@ std::string RootObjectReference3FND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> RootObjectReference3FND::clone() const
+{
+  return std::make_unique<RootObjectReference3FND>(*this);
+}
 } // namespace libone

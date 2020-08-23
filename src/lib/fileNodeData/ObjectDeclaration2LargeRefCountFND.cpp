@@ -53,4 +53,8 @@ std::string ObjectDeclaration2LargeRefCountFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectDeclaration2LargeRefCountFND::clone() const
+{
+  return std::make_unique<ObjectDeclaration2LargeRefCountFND>(*this);
+}
 } // namespace libone

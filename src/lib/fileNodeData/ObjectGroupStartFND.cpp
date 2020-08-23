@@ -28,4 +28,9 @@ std::string ObjectGroupStartFND::to_string() const
 {
   return "";
 }
+
+std::unique_ptr<IFileNodeData> ObjectGroupStartFND::clone() const
+{
+  return std::make_unique<ObjectGroupStartFND>(*this);
+}
 } // namespace libone

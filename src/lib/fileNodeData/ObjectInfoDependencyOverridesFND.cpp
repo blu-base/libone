@@ -53,4 +53,8 @@ std::string ObjectInfoDependencyOverridesFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectInfoDependencyOverridesFND::clone() const
+{
+  return std::make_unique<ObjectInfoDependencyOverridesFND>(*this);
+}
 } // namespace libone

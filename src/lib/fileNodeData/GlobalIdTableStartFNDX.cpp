@@ -25,4 +25,8 @@ std::string GlobalIdTableStartFNDX::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> GlobalIdTableStartFNDX::clone() const
+{
+  return std::make_unique<GlobalIdTableStartFNDX>(*this);
+}
 } // namespace libone

@@ -30,4 +30,8 @@ std::string FileDataStoreListReferenceFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> FileDataStoreListReferenceFND::clone() const
+{
+  return std::make_unique<FileDataStoreListReferenceFND>(*this);
+}
 } // namespace libone

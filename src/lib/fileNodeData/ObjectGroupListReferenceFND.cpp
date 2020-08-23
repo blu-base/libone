@@ -39,4 +39,8 @@ std::string ObjectGroupListReferenceFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectGroupListReferenceFND::clone() const
+{
+  return std::make_unique<ObjectGroupListReferenceFND>(*this);
+}
 } // namespace libone

@@ -14,6 +14,8 @@
 #include "fileNodeData/FileNodeData.h"
 #include <librevenge-stream/librevenge-stream.h>
 
+#include <memory>
+
 
 #include "libone_utils.h"
 #include "FileNodeChunkReference.h"
@@ -82,8 +84,14 @@ class FileNode
 public:
 
   ~FileNode();
+
+  FileNode();
+  FileNode(const FileNode &obj);
+
+  FileNode &operator=(const FileNode &rhs);
+  FileNode &operator=(FileNode &&rhs);
   void parse(const libone::RVNGInputStreamPtr_t &input);
-  std::string to_string();
+  std::string to_string() const;
 
   FndId get_FileNodeID() const
   {
@@ -109,9 +117,9 @@ public:
   {
     return m_base_type;
   }
-  IFileNodeData *get_fnd()
+  IFileNodeData *get_fnd() const
   {
-    return m_fnd;
+    return m_fnd.get();
   }
   uint64_t get_location() const
   {
@@ -131,13 +139,14 @@ private:
   FndId m_fnd_id = FndId::fnd_invalid_id;
   enum fnd_basetype m_base_type = fnd_invalid_basetype;
   void parse_header(const libone::RVNGInputStreamPtr_t &input);
-  IFileNodeData *m_fnd = nullptr;
+  std::unique_ptr<IFileNodeData> m_fnd = nullptr;
 
   static const uint32_t mask_fnd_id        = 0x3FF;
   static const uint32_t mask_fnd_base_type = 0xF;
   static const uint32_t mask_fnd_size      = 0x1FFF;
   static const uint32_t mask_format_stp    = 0x3;
   static const uint32_t mask_format_cb     = 0x3;
+
 
   static const uint32_t shift_format_stp   = 23;
   static const uint32_t shift_format_cb    = 25;

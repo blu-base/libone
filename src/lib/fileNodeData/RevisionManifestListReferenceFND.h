@@ -24,6 +24,8 @@ public:
   void parse(const libone::RVNGInputStreamPtr_t &input) override;
 
   std::string to_string() const override;
+
+  std::unique_ptr<IFileNodeData> clone() const override;
 };
 
 } // namespace libone

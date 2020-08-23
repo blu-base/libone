@@ -70,4 +70,8 @@ std::string ObjectDeclarationFileData3RefCountFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectDeclarationFileData3RefCountFND::clone() const
+{
+  return std::make_unique<ObjectDeclarationFileData3RefCountFND>(*this);
+}
 } // namespace libone

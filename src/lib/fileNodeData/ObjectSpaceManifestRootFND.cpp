@@ -27,4 +27,8 @@ std::string ObjectSpaceManifestRootFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectSpaceManifestRootFND::clone() const
+{
+  return std::make_unique<ObjectSpaceManifestRootFND>(*this);
+}
 } // namespace libone

@@ -61,7 +61,7 @@ private:
   uint64_t m_next_fragment_offset;
   FileChunkReference m_next_fragment;
 
-  bool is_end_of_list(FileNode current_node, long current_offset);
+  bool is_end_of_list(FileNode &current_node, long current_offset);
   void skip_padding(const libone::RVNGInputStreamPtr_t &input);
 
   const uint64_t header_magic_id = 0xA4567AB1F5F7F4C4;

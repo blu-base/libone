@@ -76,4 +76,8 @@ std::string ObjectRevisionWithRefCountFNDX::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectRevisionWithRefCountFNDX::clone() const
+{
+  return std::make_unique<ObjectRevisionWithRefCountFNDX>(*this);
+}
 } // namespace libone

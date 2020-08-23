@@ -39,4 +39,8 @@ std::string RevisionRoleAndContextDeclarationFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> RevisionRoleAndContextDeclarationFND::clone() const
+{
+  return std::make_unique<RevisionRoleAndContextDeclarationFND>(*this);
+}
 } // namespace libone

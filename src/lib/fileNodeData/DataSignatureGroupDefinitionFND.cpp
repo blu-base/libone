@@ -28,4 +28,9 @@ std::string DataSignatureGroupDefinitionFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> DataSignatureGroupDefinitionFND::clone() const
+{
+  return std::make_unique<DataSignatureGroupDefinitionFND>(*this);
+}
+
 } // namespace libone

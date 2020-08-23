@@ -50,12 +50,12 @@ std::string Revision::to_string()
 void Revision::parse_dependencies(const libone::RVNGInputStreamPtr_t &input, FileNode node)
 {
 
-  libone::ObjectInfoDependencyOverridesFND tnode = *dynamic_cast<libone::ObjectInfoDependencyOverridesFND *>(node.get_fnd());
+  libone::ObjectInfoDependencyOverridesFND *tnode = dynamic_cast<libone::ObjectInfoDependencyOverridesFND *>(node.get_fnd());
 
 //   CompactID temp;
-  uint32_t n_8bitoverrides = tnode.getData().c8BitOverrides();
-  uint32_t n_32bitoverrides = tnode.getData().c32BitOverrides();;
-  uint32_t crc = tnode.getData().crc();
+  uint32_t n_8bitoverrides = tnode->getData().c8BitOverrides();
+  uint32_t n_32bitoverrides = tnode->getData().c32BitOverrides();;
+  uint32_t crc = tnode->getData().crc();
   uint32_t i = 0;
 //   long old = -1;
 
@@ -63,6 +63,7 @@ void Revision::parse_dependencies(const libone::RVNGInputStreamPtr_t &input, Fil
   (void) i;
   (void) n_8bitoverrides;
   (void) n_32bitoverrides;
+  (void) input;
 
   /*
   if (!tnode.getRef().is_fcrNil())

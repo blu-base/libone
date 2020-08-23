@@ -33,6 +33,7 @@ public:
 
   std::string to_string() const override;
 
+  std::unique_ptr<IFileNodeData> clone() const override;
 };
 
 } // namespace libone

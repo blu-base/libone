@@ -40,4 +40,8 @@ std::string ObjectSpaceManifestListReferenceFND::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectSpaceManifestListReferenceFND::clone() const
+{
+  return std::make_unique<ObjectSpaceManifestListReferenceFND>(*this);
+}
 } // namespace libone

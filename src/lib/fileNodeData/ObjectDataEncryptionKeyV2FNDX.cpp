@@ -8,11 +8,12 @@ ObjectDataEncryptionKeyV2FNDX::ObjectDataEncryptionKeyV2FNDX(
   StpFormat stpFormat, CbFormat cbFormat)
   : m_ref(stpFormat, cbFormat), m_EncryptionData() {}
 
-// ObjectDataEncryptionKeyV2FNDX::ObjectDataEncryptionKeyV2FNDX(const ObjectDataEncryptionKeyV2FNDX &source)
-//   : m_ref(source.m_ref),
-// {
-//   std::copy(source.getEncryptionData(), source.getEncryptionData() + source.getEncryptionDataLength(), m_EncryptionData);
-// }
+
+ObjectDataEncryptionKeyV2FNDX::ObjectDataEncryptionKeyV2FNDX(const ObjectDataEncryptionKeyV2FNDX &source)
+  : m_ref(source.m_ref), m_EncryptionData(new unsigned char[m_ref.cb()])
+{
+  std::copy(source.m_EncryptionData.get(), source.m_EncryptionData.get() + m_ref.cb(), m_EncryptionData.get());
+}
 
 ObjectDataEncryptionKeyV2FNDX::~ObjectDataEncryptionKeyV2FNDX()
 {
@@ -80,6 +81,12 @@ void ObjectDataEncryptionKeyV2FNDX::parse(const libone::RVNGInputStreamPtr_t &in
 std::string ObjectDataEncryptionKeyV2FNDX::to_string() const
 {
   return "";
+}
+
+
+std::unique_ptr<IFileNodeData> ObjectDataEncryptionKeyV2FNDX::clone() const
+{
+  return std::make_unique<ObjectDataEncryptionKeyV2FNDX>(*this);
 }
 
 } // namespace libone

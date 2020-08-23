@@ -26,11 +26,45 @@ namespace libone
 
 FileNode::~FileNode()
 {
-  if (m_fnd != nullptr)
-  {
-    delete m_fnd;
-  }
 }
+FileNode::FileNode() : m_fncr(), m_fnd_id(FndId::fnd_invalid_id), m_base_type(fnd_invalid_basetype),
+  m_fnd(nullptr)
+{
+}
+
+FileNode::FileNode(const FileNode &obj) :
+  m_fncr(obj.m_fncr), m_fnd_id(obj.m_fnd_id), m_base_type(obj.m_base_type)
+{
+  if (obj.get_fnd() != nullptr)
+  {
+    m_fnd = obj.m_fnd->clone();
+  }
+  else
+  {
+    m_fnd = nullptr;
+  }
+
+}
+
+FileNode &FileNode::operator=(const FileNode &rhs)
+{
+  m_fncr = rhs.m_fncr;
+  m_fnd_id = rhs.m_fnd_id;
+  m_base_type = rhs.m_base_type;
+
+  m_fnd = rhs.m_fnd->clone();
+  return *this;
+}
+FileNode &FileNode::operator=(FileNode &&rhs)
+{
+  m_fncr = rhs.m_fncr;
+  m_fnd_id = rhs.m_fnd_id;
+  m_base_type = rhs.m_base_type;
+
+  m_fnd = std::move(rhs.m_fnd);
+  return *this;
+}
+
 
 std::string fnd_id_to_string(FndId id_fnd)
 {
@@ -170,112 +204,107 @@ void FileNode::parse(const libone::RVNGInputStreamPtr_t &input)
   switch (m_fnd_id)
   {
   case FndId::DataSignatureGroupDefinitionFND:
-    m_fnd = new DataSignatureGroupDefinitionFND();
+    m_fnd = std::make_unique<DataSignatureGroupDefinitionFND>();
     break;
   case FndId::FileDataStoreListReferenceFND:
-    m_fnd = new FileDataStoreListReferenceFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<FileDataStoreListReferenceFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::FileDataStoreObjectReferenceFND:
-    m_fnd = new FileDataStoreObjectReferenceFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<FileDataStoreObjectReferenceFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::GlobalIdTableEntry2FNDX:
-    m_fnd = new GlobalIdTableEntry2FNDX();
+    m_fnd = std::make_unique<GlobalIdTableEntry2FNDX>();
     break;
   case FndId::GlobalIdTableEntry3FNDX:
-    m_fnd = new GlobalIdTableEntry3FNDX();
+    m_fnd = std::make_unique<GlobalIdTableEntry3FNDX>();
     break;
   case FndId::GlobalIdTableEntryFNDX:
-    m_fnd = new GlobalIdTableEntryFNDX();
+    m_fnd = std::make_unique<GlobalIdTableEntryFNDX>();
     break;
   case FndId::GlobalIdTableStartFNDX:
-    m_fnd = new GlobalIdTableStartFNDX();
+    m_fnd = std::make_unique<GlobalIdTableStartFNDX>();
     break;
   case FndId::HashedChunkDescriptor2FND:
-    m_fnd = new HashedChunkDescriptor2FND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<HashedChunkDescriptor2FND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectDataEncryptionKeyV2FNDX:
-    m_fnd = new ObjectDataEncryptionKeyV2FNDX(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectDataEncryptionKeyV2FNDX>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectDeclaration2LargeRefCountFND:
-    m_fnd =
-      new ObjectDeclaration2LargeRefCountFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectDeclaration2LargeRefCountFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectDeclaration2RefCountFND:
-    m_fnd = new ObjectDeclaration2RefCountFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectDeclaration2RefCountFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectDeclarationFileData3LargeRefCountFND:
-    m_fnd = new ObjectDeclarationFileData3LargeRefCountFND();
+    m_fnd = std::make_unique<ObjectDeclarationFileData3LargeRefCountFND>();
     break;
   case FndId::ObjectDeclarationFileData3RefCountFND:
-    m_fnd = new ObjectDeclarationFileData3RefCountFND();
+    m_fnd = std::make_unique<ObjectDeclarationFileData3RefCountFND>();
     break;
   case FndId::ObjectDeclarationWithRefCount2FNDX:
-    m_fnd =
-      new ObjectDeclarationWithRefCount2FNDX(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectDeclarationWithRefCount2FNDX>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectDeclarationWithRefCountFNDX:
-    m_fnd =
-      new ObjectDeclarationWithRefCountFNDX(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectDeclarationWithRefCountFNDX>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectGroupListReferenceFND:
-    m_fnd = new ObjectGroupListReferenceFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectGroupListReferenceFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectGroupStartFND:
-    m_fnd = new ObjectGroupStartFND();
+    m_fnd = std::make_unique<ObjectGroupStartFND>();
     break;
   case FndId::ObjectInfoDependencyOverridesFND:
-    m_fnd = new ObjectInfoDependencyOverridesFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectInfoDependencyOverridesFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectRevisionWithRefCount2FNDX:
-    m_fnd = new ObjectRevisionWithRefCount2FNDX(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectRevisionWithRefCount2FNDX>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectRevisionWithRefCountFNDX:
-    m_fnd = new ObjectRevisionWithRefCountFNDX(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectRevisionWithRefCountFNDX>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectSpaceManifestListReferenceFND:
-    m_fnd =
-      new ObjectSpaceManifestListReferenceFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ObjectSpaceManifestListReferenceFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::ObjectSpaceManifestListStartFND:
-    m_fnd = new ObjectSpaceManifestListStartFND();
+    m_fnd = std::make_unique<ObjectSpaceManifestListStartFND>();
     break;
   case FndId::ObjectSpaceManifestRootFND:
-    m_fnd = new ObjectSpaceManifestRootFND();
+    m_fnd = std::make_unique<ObjectSpaceManifestRootFND>();
     break;
   case FndId::ReadOnlyObjectDeclaration2LargeRefCountFND:
-    m_fnd = new ReadOnlyObjectDeclaration2LargeRefCountFND(m_fncr.get_stp_fmt(),
-                                                           m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ReadOnlyObjectDeclaration2LargeRefCountFND>(m_fncr.get_stp_fmt(),
+                                                                         m_fncr.get_cb_fmt());
     break;
   case FndId::ReadOnlyObjectDeclaration2RefCountFND:
-    m_fnd =
-      new ReadOnlyObjectDeclaration2RefCountFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<ReadOnlyObjectDeclaration2RefCountFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::RevisionManifestListReferenceFND:
-    m_fnd = new RevisionManifestListReferenceFND(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
+    m_fnd = std::make_unique<RevisionManifestListReferenceFND>(m_fncr.get_stp_fmt(), m_fncr.get_cb_fmt());
     break;
   case FndId::RevisionManifestListStartFND:
-    m_fnd = new RevisionManifestListStartFND();
+    m_fnd = std::make_unique<RevisionManifestListStartFND>();
     break;
   case FndId::RevisionManifestStart4FND:
-    m_fnd = new RevisionManifestStart4FND();
+    m_fnd = std::make_unique<RevisionManifestStart4FND>();
     break;
   case FndId::RevisionManifestStart6FND:
-    m_fnd = new RevisionManifestStart6FND();
+    m_fnd = std::make_unique<RevisionManifestStart6FND>();
     break;
   case FndId::RevisionManifestStart7FND:
-    m_fnd = new RevisionManifestStart7FND();
+    m_fnd = std::make_unique<RevisionManifestStart7FND>();
     break;
   case FndId::RevisionRoleAndContextDeclarationFND:
-    m_fnd = new RevisionRoleAndContextDeclarationFND();
+    m_fnd = std::make_unique<RevisionRoleAndContextDeclarationFND>();
     break;
   case FndId::RevisionRoleDeclarationFND:
-    m_fnd = new RevisionRoleDeclarationFND();
+    m_fnd = std::make_unique<RevisionRoleDeclarationFND>();
     break;
   case FndId::RootObjectReference2FNDX:
-    m_fnd = new RootObjectReference2FNDX();
+    m_fnd = std::make_unique<RootObjectReference2FNDX>();
     break;
   case FndId::RootObjectReference3FND:
-    m_fnd = new RootObjectReference3FND();
+    m_fnd = std::make_unique<RootObjectReference3FND>();
     break;
 
   // nodes without data
@@ -286,18 +315,17 @@ void FileNode::parse(const libone::RVNGInputStreamPtr_t &input)
   case FndId::ChunkTerminatorFND:
   case FndId::fnd_invalid_id:
   default:
-    m_fnd = nullptr;
     break;
   }
 
   if (m_fnd != nullptr)
   {
-    input >> *m_fnd;
+    input >> *m_fnd.get();
   }
 
 }
 
-std::string FileNode::to_string()
+std::string FileNode::to_string() const
 {
   std::stringstream stream;
 

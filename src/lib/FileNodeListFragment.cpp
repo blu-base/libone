@@ -44,7 +44,7 @@ void FileNodeListFragment::parse(const libone::RVNGInputStreamPtr_t &input)
   if (magic != header_magic_id)
   {
     DBMSG << "Parsed magic " << magic << " does not match expected header magic" << header_magic_id << std::endl;
-    assert(false);
+//     assert(false);
   }
 
 
@@ -100,7 +100,7 @@ void FileNodeListFragment::skip_padding(const libone::RVNGInputStreamPtr_t &inpu
 }
 
 /* TODO: not sure how to satisfy the 'Transaction' requirement */
-bool FileNodeListFragment::is_end_of_list(FileNode current_node, long current_offset)
+bool FileNodeListFragment::is_end_of_list(FileNode &current_node, long current_offset)
 {
   if (current_node.get_FileNodeID() == FndId::ChunkTerminatorFND)
   {

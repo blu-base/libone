@@ -8,7 +8,7 @@ project(
     version : '0.0.90',
     license : 'MPL 2.0+',
     default_options : [
-        'cpp_std=c++11',
+        'cpp_std=c++14',
         'debug=false',
         'werror=true',
         'warning_level=3',

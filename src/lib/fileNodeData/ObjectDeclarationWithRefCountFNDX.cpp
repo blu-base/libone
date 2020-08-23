@@ -54,4 +54,8 @@ std::string ObjectDeclarationWithRefCountFNDX::to_string() const
   return "";
 }
 
+std::unique_ptr<IFileNodeData> ObjectDeclarationWithRefCountFNDX::clone() const
+{
+  return std::make_unique<ObjectDeclarationWithRefCountFNDX>(*this);
+}
 } // namespace libone

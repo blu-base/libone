@@ -18,6 +18,7 @@ private:
   std::unique_ptr<unsigned char[]> m_EncryptionData;
 public:
   ObjectDataEncryptionKeyV2FNDX(const StpFormat stpFormat, const CbFormat cbFormat);
+  ObjectDataEncryptionKeyV2FNDX(const ObjectDataEncryptionKeyV2FNDX &source);
   ~ObjectDataEncryptionKeyV2FNDX();
 
 //   ObjectDataEncryptionKeyV2FNDX &operator=(const ObjectDataEncryptionKeyV2FNDX &rhs);
@@ -32,6 +33,8 @@ public:
   void parse(const libone::RVNGInputStreamPtr_t &input) override;
 
   std::string to_string() const override;
+
+  std::unique_ptr<IFileNodeData> clone() const override;
 };
 
 } // namespace libone

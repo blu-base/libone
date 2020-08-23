@@ -23,6 +23,8 @@ public:
 
   virtual std::string to_string() const = 0;
 
+  virtual std::unique_ptr<IFileNodeData> clone() const = 0;
+
 };
 
 } // namespace libone
